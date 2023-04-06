@@ -2,7 +2,7 @@
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 import os
-#import random
+# import random
 
 
 # Function to clear the screen 
@@ -18,7 +18,7 @@ def clear_terminal():
 # Get users name.
 print("\u001b[1mWelcome to \u001b[30mBlack\u001b[31mJack!")
 name = input("\u001b[32mWhat is your name? ")
-print(f'Welcome {name} to game. Good luck!')
+print(f'Welcome {name} to the game. Good luck!')
 
 # Create a while loop 
 while True:
@@ -27,24 +27,42 @@ while True:
     print("3) Exist Game")
 
     choice = input("Enter menu number please:")
-
+    # Strip method incase the user enters blank spaces
     choice = choice.strip()
 
-    if (choice == "1"):
+    if choice == "1":
         PLAYING = True
         break
-    elif (choice == "2"):
+    if choice == "2":
         clear_terminal()
         print("""
-            \u001b[41;1mThe rules are:\u001b[0m
-            1.Aim of JackJack is to get 21 or as close to as possible\n
-            2.Jacks, kings and queens are worth 10 \n
-            3.Ace can be either 1 or 11\n
-            4.You get 2 cards face up, dealer will recieve 1 card face down\n
-            5.The choice is to hit or stand until you or the dealer goes bust\n
-            6.You will start with 100 chips and can bet each hand\n
-            7.You will be playing against the computer""")
-    elif (choice == "3"):
+            \u001b[41;1mTHE RULES ARE:\u001b[0m \n
+            1.Aim of JackJack is to get 21 or as close to as possible.\n
+            2.Jacks, kings and queens are worth 10. \n
+            3.Ace can be either 1 or 11.\n
+            4.You get 2 cards face up, dealer will recieve 1 card face down.\n
+            5.Choice is to hit or stand until you or the dealer goes bust.\n
+            6.You will start with 100 chips and can bet each hand.\n
+            7.You will be playing against the computer.""")
+    elif choice == "3":
         break
+    else:
+        print("Invaild Option")
+        print("Options are 1, 2 or 3. Please select one.")
+        print("No funny business trying to break my code \U0001F607\U0001F600")
+
+
+# Make a class for the deck
+class Deck:
+    suits = "Spades Clubs Diamonds Hearts".split()
+    symbols = ['\u2663', '\u2660', '\u2665', '\u2666']
+    rank = ['Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace']
+    values = ["2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, "10": 10, "J": 10, "Q": 10, "K": 10, "A": 11]
+
+    def shuffle(self):
+        random.shuffle(self.cards)
+
+
+
 
 

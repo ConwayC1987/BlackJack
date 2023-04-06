@@ -62,6 +62,33 @@ class Deck:
     def shuffle(self):
         random.shuffle(self.cards)
 
+    def _deck(self, decks=1):
+        self.length = len(self)
+        self.cards = [Card(value, suit) for suit in self.suits for value in self.values] * self.decks
+
+    def join(self):
+        return len(self.cards)
+    # Idea from len and https://www.pythonmorsels.com/making-the-len-function-work-on-your-python-objects/
+    def __len__(self):
+        return len(self.cards)
+    # The method allows instances of this class to be indexed using square brackets
+    def __getitem__(self, position):
+        return self.cards[position]
+    #
+     def __setitem__(self, position, value):
+        self.cards[position] = value 
+    # Method used to represent a class’s objects as a string
+    def __repr__(self):
+        return "Deck()\n" + ''.join(f"({card.value}-{card.suit})" for card in self.cards)
+    #
+    def draw_card(self):
+        return self.cards.pop()
+
+    # Reset the deck
+    def reset(self):
+        self.cards = [Card(value, suit) for suit in self.suits for value in self.values] * self.decks
+
+
 
 
 

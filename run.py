@@ -2,10 +2,10 @@
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 import os
-# import random
+import random
 
 
-# Function to clear the screen 
+# Function to clear the screen.
 def clear_terminal():
     # For windows
     if os.name == 'nt':
@@ -14,13 +14,56 @@ def clear_terminal():
         os.system('clear')
 
 
+# Make a class for the deck
+class Deck():
+    # ASCII art for card suits
+    suits = ['\u2660', '\u2665', '\u2666', '\u2663']
+    ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+    
+    def __init__(self):
+        # Shuffle the deck
+        self.deck = [(rank, suit) for suit in self.suits for rank in self.ranks]
+        random.shuffle(self.deck)
+
+        # Deal cards to dealer and player
+        self.dealer_hand = [self.deck.pop(), self.deck.pop()]
+        self.player_hand = [self.deck.pop(), self.deck.pop()]
+
+    # Function to create ASCII representation of small cards
+    @staticmethod
+    def create_small_card_ascii(rank, suit):
+        card_ascii = [
+            f"┌───────┐",
+            f"│{rank:<2}     │",
+            f"│   {suit}   │",
+            f"│     {rank:>2}│",
+            f"└───────┘"
+        ]
+
+        return card_ascii
+
+    # Function to display cards with ASCII representations
+    def display_cards(self, title, hand):
+        print(f"\n{title}:")
+        card_rows = ["  ".join(lines) for lines in zip(*[self.create_small_card_ascii(card[0], card[1]) for card in hand])]
+        for row in card_rows:
+            print(row)
+
+
+# Create an instance of the Deck class
+deck = Deck()
+
+# Display dealer and player cards
+deck.display_cards('Dealer', deck.dealer_hand)
+deck.display_cards('Player', deck.player_hand)
+
 # Page to greet the user to the game.
 # Get users name.
 print("\u001b[1mWelcome to \u001b[30mBlack\u001b[31mJack!")
 name = input("\u001b[32mWhat is your name? ")
 print(f'Welcome {name} to the game. Good luck!')
 
-# Create a while loop 
+# Create a while loop.
 while True:
     print("1) Play Game")
     print("2) Read The Rules")
@@ -50,46 +93,4 @@ while True:
         print("Invaild Option")
         print("Options are 1, 2 or 3. Please select one.")
         print("No funny business trying to break my code \U0001F607\U0001F600")
-
-
-# Make a class for the deck
-class Deck:
-    suits = "Spades Clubs Diamonds Hearts".split()
-    symbols = ['\u2663', '\u2660', '\u2665', '\u2666']
-    rank = ['Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace']
-    values = ["2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, "10": 10, "J": 10, "Q": 10, "K": 10, "A": 11]
-
-    def shuffle(self):
-        random.shuffle(self.cards)
-
-    def _deck(self, decks=1):
-        self.length = len(self)
-        self.cards = [Card(value, suit) for suit in self.suits for value in self.values] * self.decks
-
-    def join(self):
-        return len(self.cards)
-    # Idea from len and https://www.pythonmorsels.com/making-the-len-function-work-on-your-python-objects/
-    def __len__(self):
-        return len(self.cards)
-    # The method allows instances of this class to be indexed using square brackets
-    def __getitem__(self, position):
-        return self.cards[position]
-    #
-     def __setitem__(self, position, value):
-        self.cards[position] = value 
-    # Method used to represent a class’s objects as a string
-    def __repr__(self):
-        return "Deck()\n" + ''.join(f"({card.value}-{card.suit})" for card in self.cards)
-    #
-    def draw_card(self):
-        return self.cards.pop()
-
-    # Reset the deck
-    def reset(self):
-        self.cards = [Card(value, suit) for suit in self.suits for value in self.values] * self.decks
-
-
-
-
-
 

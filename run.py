@@ -12,9 +12,9 @@ def clear_terminal():
         os.system('clear')
 
 
-
 # Make a class for the deck
-class Deck:
+class Deck():
+    
     # ASCII art for card suits
     suits = ['\u2660', '\u2665', '\u2666', '\u2663']
     ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
@@ -65,20 +65,42 @@ class Deck:
             print(row)
 
 
-# Create an instance of the Deck class
-deck = Deck()
+def startpg():
+    """
+    Title using ASCII art
+    """
+    TITLE = r"""
+    ██████╗ ██╗      █████╗  ██████╗██╗  ██╗     ██╗ █████╗  ██████╗██╗  ██╗
+    ██╔══██╗██║     ██╔══██╗██╔════╝██║ ██╔╝     ██║██╔══██╗██╔════╝██║ ██╔╝
+    ██████╔╝██║     ███████║██║     █████╔╝      ██║███████║██║     █████╔╝ 
+    ██╔══██╗██║     ██╔══██║██║     ██╔═██╗ ██   ██║██╔══██║██║     ██╔═██╗ 
+    ██║  ██║███████╗██║  ██║╚██████╗██║  ██╗╚█████╔╝██║  ██║╚██████╗██║  ██╗
+    ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
+    """
 
-# Display dealer and player cards with one dealer card hidden
-deck.display_cards('Dealer', deck.dealer_hand, hide_second_card=True)
-deck.display_cards('Player', deck.player_hand)
+    # Display the title
+    print(TITLE)
+    input("\nPress enter to start...")
 
+
+# Call the startpg() function at the beginning of your script
+if __name__ == "__main__":
+    startpg()
+
+
+# Get player 
+name = input("\u001b[32mWhat is your name? ")
+print("\u001b[1mWelcome to \u001b[30mBlack\u001b[31mJack!")
+print(f'Welcome {name} to the game. Good luck!')
+    
 
 # Page to greet the user to the game.
 # Get users name.
-print("\u001b[1mWelcome to \u001b[30mBlack\u001b[31mJack!")
-name = input("\u001b[32mWhat is your name? ")
-print(f'Welcome {name} to the game. Good luck!')
 
+
+
+
+# Create a while loop.
 # Create a while loop.
 while True:
     print("1) Play Game")
@@ -109,3 +131,11 @@ while True:
         print("Invaild Option")
         print("Options are 1, 2 or 3. Please select one.")
         print("No funny business trying to break my code \U0001F607\U0001F600")
+
+
+# Create an instance of the Deck class
+deck = Deck()
+
+# Display dealer and player cards with one dealer card hidden
+deck.display_cards('Dealer', deck.dealer_hand, hide_second_card=True)
+deck.display_cards('Player', deck.player_hand)

@@ -5,7 +5,7 @@ import random
 
 # Function to clear the screen.
 def clear_terminal():
-    # For windows
+    # Clear for windows and linux
     if os.name == 'nt':
         os.system('cls')
     else:
@@ -14,14 +14,13 @@ def clear_terminal():
 
 # Make a class for the deck
 class Deck():
-    
     # ASCII art for card suits
     suits = ['\u2660', '\u2665', '\u2666', '\u2663']
     ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 
-    def __init__(self):
-        # Shuffle the deck
+    def __init__(self):    
         self.deck = [(rank, suit) for suit in self.suits for rank in self.ranks]
+        # Shuffle the deck        
         random.shuffle(self.deck)
 
         # Deal cards to dealer and player
@@ -81,29 +80,21 @@ def startpg():
     # Display the title
     print(TITLE)
     input("\nPress enter to start...")
-
+    
 
 # Call the startpg() function at the beginning of your script
 if __name__ == "__main__":
     startpg()
 
-
-# Get player 
-name = input("\u001b[32mWhat is your name? ")
-print("\u001b[1mWelcome to \u001b[30mBlack\u001b[31mJack!")
-print(f'Welcome {name} to the game. Good luck!')
-    
-
-# Page to greet the user to the game.
 # Get users name.
+name = input("\u001b[32mWhat is your name? ")
+# Greet the user to the game.
+print("\u001b[1mWelcome to \u001b[30mBlack\u001b[31mJack!\u001b[0m")
+print(f'Welcome {name} to the game. Good luck!')
 
-
-
-
-# Create a while loop.
 # Create a while loop.
 while True:
-    print("1) Play Game")
+    print("\u001b[42;1m) Play Game")
     print("2) Read The Rules")
     print("3) Exist Game")
 
@@ -112,6 +103,7 @@ while True:
     choice = choice.strip()
 
     if choice == "1":
+        clear_terminal()
         PLAYING = True
         break
     if choice == "2":
@@ -133,9 +125,12 @@ while True:
         print("No funny business trying to break my code \U0001F607\U0001F600")
 
 
-# Create an instance of the Deck class
-deck = Deck()
+choice = input("Press enter to start.....")
 
-# Display dealer and player cards with one dealer card hidden
-deck.display_cards('Dealer', deck.dealer_hand, hide_second_card=True)
-deck.display_cards('Player', deck.player_hand)
+# Example usage:
+# Initialize a new deck
+my_deck = Deck()
+
+# Print the dealer's and player's hands with ASCII representations
+my_deck.display_cards("Dealer's hand", my_deck.dealer_hand, hide_second_card=True)
+my_deck.display_cards("Player's hand", my_deck.player_hand)

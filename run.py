@@ -1,5 +1,3 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 import os
 import random
@@ -14,12 +12,13 @@ def clear_terminal():
         os.system('clear')
 
 
+
 # Make a class for the deck
 class Deck():
     # ASCII art for card suits
     suits = ['\u2660', '\u2665', '\u2666', '\u2663']
     ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
-    
+
     def __init__(self):
         # Shuffle the deck
         self.deck = [(rank, suit) for suit in self.suits for rank in self.ranks]
@@ -31,21 +30,37 @@ class Deck():
 
     # Function to create ASCII representation of small cards
     @staticmethod
-    def create_small_card_ascii(rank, suit):
-        card_ascii = [
-            f"┌───────┐",
-            f"│{rank:<2}     │",
-            f"│   {suit}   │",
-            f"│     {rank:>2}│",
-            f"└───────┘"
-        ]
+    def create_small_card_ascii(rank, suit, hidden=False):
+        if hidden:
+            # ASCII art for hidden card
+            card_ascii = [
+                f"┌───────┐",
+                f"│░░░░░░░│",
+                f"│░░░░░░░│",
+                f"│░░░░░░░│",
+                f"└───────┘"
+            ]
+        else:
+            card_ascii = [
+                f"┌───────┐",
+                f"│{rank:<2}     │",
+                f"│   {suit}   │",
+                f"│     {rank:>2}│",
+                f"└───────┘"
+            ]
 
         return card_ascii
 
     # Function to display cards with ASCII representations
-    def display_cards(self, title, hand):
+    def display_cards(self, title, hand, hide_second_card=False):
         print(f"\n{title}:")
-        card_rows = ["  ".join(lines) for lines in zip(*[self.create_small_card_ascii(card[0], card[1]) for card in hand])]
+        if hide_second_card:
+            # Hide the second card of the hand
+            hand_ascii = [self.create_small_card_ascii(card[0], card[1], i == 1) for i, card in enumerate(hand)]
+        else:
+            hand_ascii = [self.create_small_card_ascii(card[0], card[1]) for card in hand]
+        
+        card_rows = ["  ".join(lines) for lines in zip(*hand_ascii)]
         for row in card_rows:
             print(row)
 
@@ -53,9 +68,10 @@ class Deck():
 # Create an instance of the Deck class
 deck = Deck()
 
-# Display dealer and player cards
-deck.display_cards('Dealer', deck.dealer_hand)
+# Display dealer and player cards with one dealer card hidden
+deck.display_cards('Dealer', deck.dealer_hand, hide_second_card=True)
 deck.display_cards('Player', deck.player_hand)
+
 
 # Page to greet the user to the game.
 # Get users name.
@@ -93,4 +109,3 @@ while True:
         print("Invaild Option")
         print("Options are 1, 2 or 3. Please select one.")
         print("No funny business trying to break my code \U0001F607\U0001F600")
-

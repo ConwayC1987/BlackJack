@@ -82,7 +82,7 @@ class Deck:
 
     # Function to reset the deck
     def reset_deck(self):
-        self.deck = [(rank, suit) for suit in self.suits for rank in self.ranks]
+        self.deck = [f"{rank}{suit}" for suit in self.suits for rank in self.ranks]
         # Shuffle the deck
         random.shuffle(self.deck)
 
@@ -90,7 +90,7 @@ class Deck:
     def deal_card(self):
         return self.deck.pop()
 
-    # Fuction to make cards using ASCII art.
+    # Function to make cards using ASCII art.
     @staticmethod
     def make_cards_ascii(rank, suit, hidden=False):
         if hidden:
@@ -103,10 +103,15 @@ class Deck:
                 f"└───────┘"
             ]
         else:
+            if suit in ['\u2665', '\u2666']:  # Hearts and Diamonds are red
+                suit_color = '\033[31m'  # set suit color to red
+            else:
+                suit_color = '\033[30m'  # set suit color to black
+
             card_ascii = [
                 f"┌───────┐",
                 f"│{rank:<2}     │",
-                f"│   {suit}   │",
+                f"│{suit_color}   {suit}   \033[0m│",  # print suit symbol in specified color
                 f"│     {rank:>2}│",
                 f"└───────┘"
             ]

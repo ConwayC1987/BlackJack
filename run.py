@@ -49,7 +49,7 @@ class Deck():
                 f"└───────┘"
             ]
 
-        return 
+        return
         
 
 # Class for the player
@@ -82,20 +82,42 @@ class Player():
                 self.score += 11
                 aces += 1    
 
-    
+        while self.score > 21 and aces > 0:
+            self.score -= 10
+            aces -= 1
 
-    # Function to display cards with ASCII representations
-    def display_cards(self, title, hand, hide_second_card=False):
-        print(f"\n{title}:")
-        if hide_second_card:
-            # Hide the second card of the hand
-            hand_ascii = [self.create_small_card_ascii(card[0], card[1], i == 1) for i, card in enumerate(hand)]
-        else:
-            hand_ascii = [self.create_small_card_ascii(card[0], card[1]) for card in hand]
         
-        card_rows = ["  ".join(lines) for lines in zip(*hand_ascii)]
-        for row in card_rows:
-            print(row)
+# Function to display cards with ASCII art
+def display_cards(title, hand, hide_second_card=False):
+    print(f"\n{title}:")
+    if hide_second_card:
+        # Dealers hidden card
+        hand_ascii = [Deck.make_cards_ascii(card[0], card[1], i == 1) for i, card in enumerate(hand)]
+    else:
+        hand_ascii = [Deck.make_cards_ascii(card[0], card[1]) for card in hand]
+
+    card_rows = [" ".join(lines) for lines in zip(*hand_ascii)]
+
+    # Print the cards in a row
+    for row in card_rows:
+        print(row)
+
+
+# Function to check if player wants to hit or stay
+def ask_hit_or_stand():
+    while True:
+        choice = input("\nDo you want to Hit or Stay?")
+        if choice in ['h', 's']:
+            return choice
+        else:
+            print("Invalid response!")
+            print("Press h for another card or s to stay.")
+            print("After you make choice click Enter\u001b[31m\u001b[0m	")
+
+
+def ask_play_
+
+            
 
 
 def startpg():

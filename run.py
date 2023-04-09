@@ -24,19 +24,15 @@ class Deck():
 
     # Fuction to reset the deck
     def reset_deck(self):
-        self.deck = [(rank, suit) for suit in self.suits for rank in  self.ranks]
+        self.deck = [(rank, suit) for suit in self.suits for rank in self.ranks]
         # Shuffle the deck        
         random.shuffle(self.deck)
 
-        # Deal cards to dealer and player
-        self.dealer_hand = [self.deck.pop(), self.deck.pop()]
-        self.player_hand = [self.deck.pop(), self.deck.pop()]
-
-    # Function to create ASCII representation of small cards
+    # Fuction to deal a cards from the deck.
     @staticmethod
-    def create_small_card_ascii(rank, suit, hidden=False):
+    def make_cards_ascii(rank, suit, hidden=False):
         if hidden:
-            # ASCII art for hidden card
+                # ASCII art for hidden card
             card_ascii = [
                 f"┌───────┐",
                 f"│░░░░░░░│",
@@ -53,7 +49,21 @@ class Deck():
                 f"└───────┘"
             ]
 
-        return card_ascii
+        return 
+        
+
+# Class for the player
+class Player():
+    def __init__(self, name):
+        self.name = name
+        self.hand = []
+        self.score = 0
+
+    
+
+        
+
+    
 
     # Function to display cards with ASCII representations
     def display_cards(self, title, hand, hide_second_card=False):
@@ -137,3 +147,6 @@ my_deck = Deck()
 # Print the dealer's and player's hands with ASCII representations
 my_deck.display_cards("Dealer's hand", my_deck.dealer_hand, hide_second_card=True)
 my_deck.display_cards("Player's hand", my_deck.player_hand)
+# Deal cards to dealer and player
+        # self.dealer_hand = [self.deck.pop(), self.deck.pop()]
+        # self.player_hand = [self.deck.pop(), self.deck.pop()]

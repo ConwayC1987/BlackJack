@@ -115,9 +115,19 @@ def ask_hit_or_stand():
             print("After you make choice click Enter\u001b[31m\u001b[0m	")
 
 
-def ask_play_
+# Play again function for the player
+def ask_play_again():
+    while True:
+        choice = input("\nDo you to play again? (y/n)")
+        if choice in ['y', 'n']:
+            return choice
+        else:
+            print("Invalid choice! Please enter 'y' to Play Again or 'n' to Quit.")
 
-            
+
+# Main game loop
+while True:
+    clear_terminal()
 
 
 def startpg():
@@ -153,15 +163,15 @@ while True:
     print("2) Read The Rules")
     print("3) Exist Game")
 
-    choice = input("Enter menu number please:")
+    option = input("Enter menu number please:")
     # Strip method incase the user enters blank spaces
-    choice = choice.strip()
+    option = option.strip()
 
-    if choice == "1":
+    if option == "1":
         clear_terminal()
         PLAYING = True
         break
-    if choice == "2":
+    if option == "2":
         clear_terminal()
         print("""
             \u001b[41;1mTHE RULES ARE:\u001b[0m \n
@@ -172,7 +182,7 @@ while True:
             5.Choice is to hit or stand until you or the dealer goes bust.\n
             6.You will start with 100 chips and can bet each hand.\n
             7.You will be playing against the computer.""")
-    elif choice == "3":
+    elif option == "3":
         break
     else:
         print("Invaild Option")
@@ -180,7 +190,7 @@ while True:
         print("No funny business trying to break my code \U0001F607\U0001F600")
 
 
-choice = input("Press enter to start.....")
+start = input("Press enter to start.....")
 
 # Initialize a new deck
 my_deck = Deck()

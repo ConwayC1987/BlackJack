@@ -12,27 +12,85 @@ def clear_terminal():
         os.system('clear')
 
 
-# Make a class for the deck
-class Deck():
-    # ASCII art for card suits
-    suits = ['\u2660', '\u2665', '\u2666', '\u2663']
-    ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+def startpg():
+    """
+    Title using ASCII art
+    """
+    TITLE = r"""
+    ██████╗ ██╗      █████╗  ██████╗██╗  ██╗     ██╗ █████╗  ██████╗██╗  ██╗
+    ██╔══██╗██║     ██╔══██╗██╔════╝██║ ██╔╝     ██║██╔══██╗██╔════╝██║ ██╔╝
+    ██████╔╝██║     ███████║██║     █████╔╝      ██║███████║██║     █████╔╝ 
+    ██╔══██╗██║     ██╔══██║██║     ██╔═██╗ ██   ██║██╔══██║██║     ██╔═██╗ 
+    ███████║███████╗██║  ██║╚██████╗██║  ██╗╚█████╔╝██║  ██║╚██████╗██║  ██╗
+    ╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
+    """
 
-    # Function to reset the deck.
-    def _init_(self):
+    # Display the title
+    print(TITLE)
+
+
+# Call the startpg() function at the beginning of your script
+if __name__ == "__main__":
+    startpg()
+
+# Get users name.
+name = input("\u001b[32mWhat is your name? ")
+# Greet the user to the game.
+print("\u001b[1mWelcome to \u001b[30mBlack\u001b[31mJack!\u001b[0m")
+print(f'Welcome {name} to the game. Good luck!')
+
+# Create a while loop.
+while True:
+    print("1) Play Game")
+    print("2) Read The Rules")
+    print("3) Exist Game")
+
+    option = input("Enter menu number please:")
+    # Strip method incase the user enters blank spaces
+    option = option.strip()
+
+    if option == "1":
+        clear_terminal()
+        PLAYING = True
+        break
+    if option == "2":
+        clear_terminal()
+        print("""
+            \u001b[41;1mTHE RULES ARE:\u001b[0m \n
+            1.Aim of JackJack is to get 21 or as close to as possible.\n
+            2.Jacks, kings and queens are worth 10. \n
+            3.Ace can be either 1 or 11.\n
+            4.You get 2 cards face up, dealer will recieve 1 card face down.\n
+            5.Choice is to hit or stand until you or the dealer goes bust.\n
+            6.You will start with 100 chips and can bet each hand.\n
+            7.You will be playing against the computer.""")
+    elif option == "3":
+        break
+    else:
+        print("Invaild Option")
+        print("Options are 1, 2 or 3. Please select one.")
+        print("No funny business trying to break my code \U0001F607\U0001F600")
+
+
+# Make a class for the deck
+class Deck:
+    suits = ['\u2660', '\u2665', '\u2666', '\u2663']
+    ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+
+    def __init__(self):
         self.reset_deck()
 
-    # Fuction to reset the deck
+    # Function to reset the deck
     def reset_deck(self):
         self.deck = [(rank, suit) for suit in self.suits for rank in self.ranks]
-        # Shuffle the deck        
+        # Shuffle the deck
         random.shuffle(self.deck)
 
     # Function to deal a card from the deck
     def deal_card(self):
         return self.deck.pop()
 
-    # Fuction to deal a cards from the deck.
+    # Fuction to make cards using ASCII art.
     @staticmethod
     def make_cards_ascii(rank, suit, hidden=False):
         if hidden:
@@ -53,7 +111,7 @@ class Deck():
                 f"└───────┘"
             ]
 
-        return
+        return card_ascii
 
 
 # Class for the player
@@ -68,9 +126,9 @@ class Player():
         self.hand = []
         self.score = 0
 
-    # Function to add cards to players hand.
+    # Function to add a card to player's hand
     def add_card(self, card):
-        self.hand.append(deck)
+        self.hand.append(card)
 
     # Function for calculating the player's score
     def calculate_score(self):
@@ -139,15 +197,16 @@ while True:
     deck = Deck()
     player = Player("Player")
     dealer = Player("Dealer")
+
     # Add 4 card to the screen
     player.add_card(deck.deal_card())
     player.add_card(deck.deal_card())
-    player.add_card(deck.deal_card())
-    player.add_card(deck.deal_card())
+    dealer.add_card(deck.deal_card())
+    dealer.add_card(deck.deal_card())
 
-    # Display the hand with 1 of dealer cards hidden
+    # Display the initial hands
     display_cards("Your hand is", player.hand)
-    display_cards("The Dealer hand is", dealer.hand, True)
+    display_cards("The Dealer's hand is", dealer.hand, True)
 
     # Players choice to hit or stand
     while True:
@@ -162,75 +221,32 @@ while True:
         else:
             break
 
+    # Dealer's turn
+    while dealer.score < 17:
+        dealer.add_card(deck.deal_card())
+        dealer.calculate_score()
+        if dealer.score > 21:
+            print("The Dealer Busts. You win!")
+            break
 
-def startpg():
-    """
-    Title using ASCII art
-    """
-    TITLE = r"""
-    ██████╗ ██╗      █████╗  ██████╗██╗  ██╗     ██╗ █████╗  ██████╗██╗  ██╗
-    ██╔══██╗██║     ██╔══██╗██╔════╝██║ ██╔╝     ██║██╔══██╗██╔════╝██║ ██╔╝
-    ██████╔╝██║     ███████║██║     █████╔╝      ██║███████║██║     █████╔╝ 
-    ██╔══██╗██║     ██╔══██║██║     ██╔═██╗ ██   ██║██╔══██║██║     ██╔═██╗ 
-    ██║  ██║███████╗██║  ██║╚██████╗██║  ██╗╚█████╔╝██║  ██║╚██████╗██║  ██╗
-    ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
-    """
+    # Display final hands
+    display_cards("Your Hand", player.hand)
+    display_cards("Dealer's Hand", dealer.hand)
 
-    # Display the title
-    print(TITLE)
-    
-
-# Call the startpg() function at the beginning of your script
-if __name__ == "__main__":
-    startpg()
-
-# Get users name.
-name = input("\u001b[32mWhat is your name? ")
-# Greet the user to the game.
-print("\u001b[1mWelcome to \u001b[30mBlack\u001b[31mJack!\u001b[0m")
-print(f'Welcome {name} to the game. Good luck!')
-
-# Create a while loop.
-while True:
-    print("\u001b[42;1m) Play Game")
-    print("2) Read The Rules")
-    print("3) Exist Game")
-
-    option = input("Enter menu number please:")
-    # Strip method incase the user enters blank spaces
-    option = option.strip()
-
-    if option == "1":
-        clear_terminal()
-        PLAYING = True
-        break
-    if option == "2":
-        clear_terminal()
-        print("""
-            \u001b[41;1mTHE RULES ARE:\u001b[0m \n
-            1.Aim of JackJack is to get 21 or as close to as possible.\n
-            2.Jacks, kings and queens are worth 10. \n
-            3.Ace can be either 1 or 11.\n
-            4.You get 2 cards face up, dealer will recieve 1 card face down.\n
-            5.Choice is to hit or stand until you or the dealer goes bust.\n
-            6.You will start with 100 chips and can bet each hand.\n
-            7.You will be playing against the computer.""")
-    elif option == "3":
-        break
+    # Determine the winner
+    if player.score > 21:
+        print("Dealer wins!")
+    elif dealer.score > 21:
+        print("You Win!")
+    elif player.score > dealer.score:
+        print("You Win!")
+    elif player.score < dealer.score:
+        print("Dealer wins!")
     else:
-        print("Invaild Option")
-        print("Options are 1, 2 or 3. Please select one.")
-        print("No funny business trying to break my code \U0001F607\U0001F600")
+        print("It's a draw. Both have the same total")
 
-
-start = input("Press enter to start.....")
-
-# Initialize a new deck
-my_deck = Deck()
-
-# Print the dealer's and player's hands with ASCII representations
-my_deck.display_cards("Dealer's hand", my_deck.dealer_hand, hide_second_card=True)
-my_deck.display_cards("Player's hand", my_deck.player_hand)
-# Deal cards to dealer and player
-        # self.dealer_hand = [self.deck.pop(), self.deck.pop()]
-        # self.player_hand = [self.deck.pop(), self.deck.pop()]
+    # Ask the player if they want to play again
+    play_again = ask_play_again()
+    if play_again == 'n':
+        print("Thank you for playing! Goodbye!")
+        break

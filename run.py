@@ -68,7 +68,19 @@ class Player():
     def add_card(self, card):
         self.hand.append(card)
 
-        
+    # Function for calculating the player's score
+    def calculate_score(self):
+        self.score = 0
+        aces = 0
+        for card in self.hand:
+            rank = card[0]
+            if rank.isdigit():
+                self.score += int(rank)
+            elif rank in ['J', 'Q', 'K']:
+                self.score += 10
+            elif rank == 'A':
+                self.score += 11
+                aces += 1    
 
     
 

@@ -59,7 +59,12 @@ class Player():
         self.hand = []
         self.score = 0
 
-    
+    # Fuction that will reset the players hand and score.
+    def reset_hand(self):
+        self.hand = []
+        self.score = 0
+
+    # Function to add cards to 
 
         
 

@@ -28,11 +28,15 @@ class Deck():
         # Shuffle the deck        
         random.shuffle(self.deck)
 
+    # Function to deal a card from the deck
+    def deal_card(self):
+        return self.deck.pop()
+
     # Fuction to deal a cards from the deck.
     @staticmethod
     def make_cards_ascii(rank, suit, hidden=False):
         if hidden:
-                # ASCII art for hidden card
+            # ASCII art for hidden card
             card_ascii = [
                 f"┌───────┐",
                 f"│░░░░░░░│",
@@ -50,7 +54,7 @@ class Deck():
             ]
 
         return
-        
+
 
 # Class for the player
 class Player():
@@ -66,7 +70,7 @@ class Player():
 
     # Function to add cards to players hand.
     def add_card(self, card):
-        self.hand.append(card)
+        self.hand.append(deck)
 
     # Function for calculating the player's score
     def calculate_score(self):
@@ -86,7 +90,7 @@ class Player():
             self.score -= 10
             aces -= 1
 
-        
+
 # Function to display cards with ASCII art
 def display_cards(title, hand, hide_second_card=False):
     print(f"\n{title}:")
@@ -128,6 +132,35 @@ def ask_play_again():
 # Main game loop
 while True:
     clear_terminal()
+    print("Good Luck")
+    print("_" * 75)
+
+    # Create a deck, dealer and players
+    deck = Deck()
+    player = Player("Player")
+    dealer = Player("Dealer")
+    # Add 4 card to the screen
+    player.add_card(deck.deal_card())
+    player.add_card(deck.deal_card())
+    player.add_card(deck.deal_card())
+    player.add_card(deck.deal_card())
+
+    # Display the hand with 1 of dealer cards hidden
+    display_cards("Your hand is", player.hand)
+    display_cards("The Dealer hand is", dealer.hand, True)
+
+    # Players choice to hit or stand
+    while True:
+        choice = ask_hit_or_stand()
+        if choice == 'h':
+            player.add_card(deck.deal_card())
+            display_cards("Your hand is", player.hand)
+            player.calculate_score()
+            if player.score > 21:
+                print("Bust! You Lose")
+                break
+        else:
+            break
 
 
 def startpg():

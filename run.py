@@ -110,14 +110,24 @@ class Deck:
             else:
                 # Set suit color to black
                 suit_color = '\033[30m'
-            # Print suit symbol in color
-            card_ascii = [
-                f"┌───────┐",
-                f"│{rank:<2}     │",
-                f"│{suit_color}   {suit}   \033[0m│",
-                f"│     {rank:>2}│",
-                f"└───────┘"
-            ]
+            if rank == 'A':
+                # ASCII art for Ace
+                card_ascii = [
+                    f"┌───────┐",
+                    f"│A      │",
+                    f"│{suit_color}   {suit}   \033[0m│",
+                    f"│      A│",
+                    f"└───────┘"
+                ]
+            else:
+                # ASCII art for other cards
+                card_ascii = [
+                    f"┌───────┐",
+                    f"│{rank:<2}     │",
+                    f"│{suit_color}   {suit}   \033[0m│",
+                    f"│     {rank:>2}│",
+                    f"└───────┘"
+                ]
 
         return card_ascii
 

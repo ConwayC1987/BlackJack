@@ -103,15 +103,18 @@ class Deck:
                 f"└───────┘"
             ]
         else:
-            if suit in ['\u2665', '\u2666']:  # Hearts and Diamonds are red
-                suit_color = '\033[31m'  # set suit color to red
+            # Hearts and Diamonds are red
+            if suit in ['\u2665', '\u2666']:
+                # Set suit color to red
+                suit_color = '\033[31m'
             else:
-                suit_color = '\033[30m'  # set suit color to black
-
+                # Set suit color to black
+                suit_color = '\033[30m'
+            # Print suit symbol in color
             card_ascii = [
                 f"┌───────┐",
                 f"│{rank:<2}     │",
-                f"│{suit_color}   {suit}   \033[0m│",  # print suit symbol in specified color
+                f"│{suit_color}   {suit}   \033[0m│",
                 f"│     {rank:>2}│",
                 f"└───────┘"
             ]
@@ -126,7 +129,7 @@ class Player():
         self.hand = []
         self.score = 0
 
-    # Fuction that will reset the players hand.
+    # Function that will reset the player's hand.
     def reset_hand(self):
         self.hand = []
         self.score = 0
@@ -147,12 +150,11 @@ class Player():
                 self.score += 10
             elif rank == 'A':
                 self.score += 11
-                aces += 1    
+                aces += 1
 
         while self.score > 21 and aces > 0:
             self.score -= 10
             aces -= 1
-
 
 # Function to display cards with ASCII art
 def display_cards(title, hand, hide_second_card=False):
@@ -169,34 +171,58 @@ def display_cards(title, hand, hide_second_card=False):
     for row in card_rows:
         print(row)
 
+    if not hide_second_card:
+        # Print the total score
+        print("Total Score:", calculate_score(hand))
+
+
+# Function to calculate the total score of a hand
+def calculate_score(hand):
+    score = 0
+    aces = 0
+    for card in hand:
+        rank = card[0]
+        if rank.isdigit():
+            score += int(rank)
+        elif rank in ['J', 'Q', 'K']:
+            score += 10
+        elif rank == 'A':
+            score += 11
+            aces += 1
+
+    while score > 21 and aces > 0:
+        score -= 10
+        aces -= 1
+
+    return score
+
 
 # Function to check if player wants to hit or stay
 def ask_hit_or_stand():
     while True:
-        choice = input("\nDo you want to Hit or Stay?")
+        choice = input("\nDo you want to Hit or Stay? (h/s) ")
         if choice in ['h', 's']:
             return choice
         else:
             print("Invalid response!")
-            print("Press h for another card or s to stay.")
-            print("After you make choice click Enter\u001b[31m\u001b[0m	")
+            print("Press h to hit or s to stay.")
 
 
 # Play again function for the player
 def ask_play_again():
     while True:
-        choice = input("\nDo you to play again? (y/n)")
+        choice = input("\nDo you want to play again? (y/n) ")
         if choice in ['y', 'n']:
             return choice
         else:
-            print("Invalid choice! Please enter 'y' to Play Again or 'n' to Quit.")
+            print("Invalid choice! Enter 'y' to play again or 'n' to quit.")
 
 
 # Main game loop
 while True:
     clear_terminal()
     print("Good Luck")
-    print("_" * 75)
+    print("_" * 40)
 
     # Create a deck, dealer and players
     deck = Deck()
@@ -219,8 +245,7 @@ while True:
         if choice == 'h':
             player.add_card(deck.deal_card())
             display_cards("Your hand is", player.hand)
-            player.calculate_score()
-            if player.score > 21:
+            if calculate_score(player.hand) > 21:
                 print("Bust! You Lose")
                 break
         else:
@@ -231,27 +256,31 @@ while True:
         dealer.add_card(deck.deal_card())
         dealer.calculate_score()
         if dealer.score > 21:
-            print("The Dealer Busts. You win!")
+            print("Dealer Bust! You Win")
             break
 
-    # Display final hands
-    display_cards("Your Hand", player.hand)
-    display_cards("Dealer's Hand", dealer.hand)
-
-    # Determine the winner
-    if player.score > 21:
-        print("Dealer wins!")
-    elif dealer.score > 21:
-        print("You Win!")
-    elif player.score > dealer.score:
-        print("You Win!")
-    elif player.score < dealer.score:
-        print("Dealer wins!")
+    # Compare scores and determine the winner
+    if player.score <= 21 and dealer.score <= 21:
+        if player.score > dealer.score:
+            print("You Win!")
+        elif player.score < dealer.score:
+            print("You Lose!")
+        else:
+            print("It's a Tie!")
+    elif player.score <= 21 and dealer.score > 21:
+        print("Dealer Bust! You Win!")
+    elif player.score > 21 and dealer.score <= 21:
+        print("Bust! You Lose!")
     else:
-        print("It's a draw. Both have the same total")
+        print("It's a Tie!")
 
-    # Ask the player if they want to play again
+    # Display the final hands
+    display_cards("Your final hand is", player.hand)
+    display_cards("The Dealer's final hand is", dealer.hand)
+
+    # Ask if the player wants to play again
     play_again = ask_play_again()
     if play_again == 'n':
-        print("Thank you for playing! Goodbye!")
         break
+
+print("Thank you for playing! Goodbye!")

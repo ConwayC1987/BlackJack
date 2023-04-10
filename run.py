@@ -285,8 +285,8 @@ while True:
         print("It's a Tie!")
 
     # Display the final hands
-    display_cards("Your final hand is", player.hand)
     display_cards("The Dealer's final hand is", dealer.hand)
+    display_cards("Your final hand is", player.hand)
 
     # Ask if the player wants to play again
     play_again = ask_play_again()

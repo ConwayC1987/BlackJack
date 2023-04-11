@@ -90,7 +90,6 @@ class Deck:
     def deal_card(self):
         return self.deck.pop()
 
-    # Function to make cards using ASCII art.
     @staticmethod
     def make_cards_ascii(rank, suit, hidden=False):
         if hidden:
@@ -112,11 +111,12 @@ class Deck:
                 suit_color = '\033[30m'
             if rank == 'A':
                 # ASCII art for Ace
+                rank_ascii = 'A'
                 card_ascii = [
                     f"┌───────┐",
-                    f"│A      │",
+                    f"│{rank_ascii:<2}     │",
                     f"│{suit_color}   {suit}   \033[0m│",
-                    f"│      A│",
+                    f"│     {rank_ascii:>2}│",
                     f"└───────┘"
                 ]
             else:
@@ -130,6 +130,25 @@ class Deck:
                 ]
 
         return card_ascii
+
+# Class for representing a playing card
+class Card():
+    def __init__(self, rank, suit):
+        self.rank = rank
+        self.suit = suit
+
+    # Function for getting the string representation of the card
+    def __str__(self):
+        if self.rank == 'A':
+            return 'A'  # Return 'A' for Ace
+        elif self.rank == 'J':
+            return 'J'
+        elif self.rank == 'Q':
+            return 'Q'
+        elif self.rank == 'K':
+            return 'K'
+        else:
+            return self.rank
 
 
 # Class for the player
@@ -149,10 +168,12 @@ class Player():
         self.hand.append(card)
 
     # Function for calculating the player's score
-    def calculate_score(self):
+    def calculate_score(self, hide_second_card=False):
         self.score = 0
         aces = 0
-        for card in self.hand:
+        for i, card in enumerate(self.hand):
+            if hide_second_card and i == 1:
+                continue  # Skip hidden card of dealer
             rank = card[0]
             if rank.isdigit():
                 self.score += int(rank)
@@ -165,6 +186,13 @@ class Player():
         while self.score > 21 and aces > 0:
             self.score -= 10
             aces -= 1
+
+        # Check for bust (score > 21 with no aces remaining)
+        if self.score > 21 and aces == 0:
+            self.score -= 10
+
+        return self.score
+
 
 # Function to display cards with ASCII art
 def display_cards(title, hand, hide_second_card=False):
@@ -183,7 +211,14 @@ def display_cards(title, hand, hide_second_card=False):
 
     if not hide_second_card:
         # Print the total score
-        print("Total Score:", calculate_score(hand))
+        score = calculate_score(hand)
+        print("Total Score:", score)
+
+        # Check if the score is over 21 and adjust for aces
+        aces = sum(card[0] == 'A' for card in hand)
+        while score > 21 and aces > 0:
+            score -= 10
+            aces -= 1
 
 
 # Function to calculate the total score of a hand

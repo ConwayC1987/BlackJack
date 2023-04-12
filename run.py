@@ -111,12 +111,11 @@ class Deck:
                 suit_color = '\033[30m'
             if rank == 'A':
                 # ASCII art for Ace
-                rank_ascii = 'A'
                 card_ascii = [
                     f"┌───────┐",
-                    f"│{rank_ascii:<2}     │",
+                    f"│A      │",
                     f"│{suit_color}   {suit}   \033[0m│",
-                    f"│     {rank_ascii:>2}│",
+                    f"│     A │",
                     f"└───────┘"
                 ]
             else:
@@ -131,6 +130,7 @@ class Deck:
 
         return card_ascii
 
+
 # Class for representing a playing card
 class Card():
     def __init__(self, rank, suit):
@@ -141,9 +141,9 @@ class Card():
     def __str__(self):
         if self.rank == 'A':
             return 'A'  # Return 'A' for Ace
-        elif self.rank == 'J':
+        if self.rank == 'J':
             return 'J'
-        elif self.rank == 'Q':
+        if self.rank == 'Q':
             return 'Q'
         elif self.rank == 'K':
             return 'K'
@@ -235,6 +235,9 @@ def calculate_score(hand):
             score += 11
             aces += 1
 
+    while score > 21:
+        print("You busted")
+        break
     while score > 21 and aces > 0:
         score -= 10
         aces -= 1
@@ -266,7 +269,6 @@ def ask_play_again():
 # Main game loop
 while True:
     clear_terminal()
-    print("Good Luck")
     print("_" * 40)
 
     # Create a deck, dealer and players
@@ -327,5 +329,4 @@ while True:
     play_again = ask_play_again()
     if play_again == 'n':
         break
-
 print("Thank you for playing! Goodbye!")

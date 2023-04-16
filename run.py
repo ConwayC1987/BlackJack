@@ -13,6 +13,7 @@ def clear_terminal():
     else:
         os.system('clear')
 
+
 # Game title made using https://patorjk.com/software/taag/#p=display&h=0&f=Big&t=BlackJack
 def startpg():
     """
@@ -21,14 +22,15 @@ def startpg():
     TITLE = r"""
     ██████╗ ██╗      █████╗  ██████╗██╗  ██╗     ██╗ █████╗  ██████╗██╗  ██╗
     ██╔══██╗██║     ██╔══██╗██╔════╝██║ ██╔╝     ██║██╔══██╗██╔════╝██║ ██╔╝
-    ██████╔╝██║     ███████║██║     █████╔╝      ██║███████║██║     █████╔╝ 
-    ██╔══██╗██║     ██╔══██║██║     ██╔═██╗ ██   ██║██╔══██║██║     ██╔═██╗ 
+    ██████╔╝██║     ███████║██║     █████╔╝      ██║███████║██║     █████╔╝
+    ██╔══██╗██║     ██╔══██║██║     ██╔═██╗ ██   ██║██╔══██║██║     ██╔═██╗
     ███████║███████╗██║  ██║╚██████╗██║  ██╗╚█████╔╝██║  ██║╚██████╗██║  ██╗
     ╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
     """
 
     # Display the title
     print(TITLE)
+
 
 # Ranks and suits for the cards in the deck
 RANKS = ('2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A')
@@ -39,6 +41,7 @@ CARD_ASCII = {
     '♦': '♦',
     '♥': '♥',
 }
+
 
 # Function to make the card using ASSCI art idea from https://github.com/zsonnen/blackjack/blob/master/visuals.py
 def print_card(card):
@@ -61,6 +64,8 @@ def print_card(card):
     ]
     return cards
 
+
+# Function to print the cards in a row
 def print_hand_in_row(hand):
     hand_cards = [[] for _ in range(7)]
     for card in hand:
@@ -74,22 +79,6 @@ def print_hand_in_row(hand):
     for row in hand_cards:
         print(' '.join(row))
 
-# Calculate the value of a hand and have 2 different values for aces, J,Q,K value is 10
-def value(hand):
-    total = 0
-    aces = 0
-    for rank, suit in hand:
-        if rank == 'A':
-            aces += 1
-            total += 11
-        elif rank in ('K', 'Q', 'J'):
-            total += 10
-        else:
-            total += int(rank)
-    while total > 21 and aces:
-        total -= 10
-        aces -= 1
-    return total
 
 # Create a deck of cards and shuffle them
 def create_deck():
@@ -97,9 +86,11 @@ def create_deck():
     random.shuffle(deck)
     return deck
 
+
 # Deal a card from the deck
 def deal_card(deck):
     return deck.pop()
+
 
 # Print the dealer card with 1 card hidden using ASSCI art
 def print_dealer_hand(hand, hide_first_card):
@@ -119,11 +110,31 @@ def print_dealer_hand(hand, hide_first_card):
         print("\033[32m\nDealer's hand:\033[0m")
         print_hand_in_row(hand)
 
+
+# Calculate the value of a hand and have 2 different values for aces, J,Q,K value is 10
+def value(hand):
+    total = 0
+    aces = 0
+    for rank, suit in hand:
+        if rank == 'A':
+            aces += 1
+            total += 11
+        elif rank in ('K', 'Q', 'J'):
+            total += 10
+        else:
+            total += int(rank)
+    while total > 21 and aces:
+        total -= 10
+        aces -= 1
+    return total
+
+
 # Function to check the player hand for a blackjack
 def check_blackjack(hand):
     if len(hand) == 2 and value(hand) == 21:
         return True
     return False
+
 
 # Function to play the game
 def play_game():

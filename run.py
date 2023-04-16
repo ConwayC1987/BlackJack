@@ -147,6 +147,11 @@ def play_game():
         if bet > chips:
             print("\033[31mYou don't have enough chips.\033[0m")
             continue
+        if bet < 0:
+            print("\033[31mNumber must be over 0\033[0m")
+            continue
+            
+
 
         # Create a deck, dealer and player
         deck = create_deck()
@@ -186,7 +191,7 @@ def play_game():
                     print_dealer_hand(dealer_hand, hide_first_card=False)
                     # Chip total will change if player busts
                     chips -= bet
-                    break       
+                    break
             # If player decides to stand
             elif action == 's':
                 # When the dealer card is less than the player they get more cards
@@ -232,9 +237,9 @@ if __name__ == '__main__':
     print(f'\033[96mWelcome {name} to the game. Good luck!\033[0m')
     # Options
     while True:
-        print("\033[34m\033[1m1) Play Game")
+        print("\033[34m1) Play Game")
         print("2) Read The Rules")
-        print("3) Exit Game\033[0m\033[21m")
+        print("3) Exit Game\033[0m")
 
         # Ask the player to select on of the options
         option = input("Enter menu number please:")

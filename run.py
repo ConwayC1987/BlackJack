@@ -104,7 +104,7 @@ def deal_card(deck):
 # Print the dealer card with 1 card hidden using ASSCI art
 def print_dealer_hand(hand, hide_first_card):
     if hide_first_card:
-        print("\033[34m\nDealer's hand:\033[0m")
+        print("\033[32m\nDealer's hand:\033[0m")
         hidden_card_cards = [
             "┌───────┐",
             "│XXXXXXX│",
@@ -116,7 +116,7 @@ def print_dealer_hand(hand, hide_first_card):
         ]
         print_hand_in_row([hidden_card_cards] + hand[1:])
     else:
-        print("\033[34m\nDealer's hand:\033[0m")
+        print("\033[32m\nDealer's hand:\033[0m")
         print_hand_in_row(hand)
 
 # Function to check the player hand for a blackjack
@@ -147,11 +147,10 @@ def play_game():
         if bet > chips:
             print("\033[31mYou don't have enough chips.\033[0m")
             continue
+        # If the player tries to enter a minus number
         if bet < 0:
             print("\033[31mNumber must be over 0\033[0m")
             continue
-            
-
 
         # Create a deck, dealer and player
         deck = create_deck()
@@ -162,7 +161,7 @@ def play_game():
 
         # Tell the player their hand total
         while True:
-            print(f'\033[94m{name} hand is:\033[0m')
+            print(f'\033[32m{name} hand is:\033[0m')
             # Print the player hand in a row
             print_hand_in_row(player_hand)
             # Print the hands value
@@ -177,7 +176,7 @@ def play_game():
                 continue
 
             # Ask the player if they want to hit or stand
-            action = input("\033[94mEnter 'h' to hit or 's' to stand:\033[0m ").lower()
+            action = input("\033[32mEnter 'h' to hit or 's' to stand:\033[0m ").lower()
             # If h is selected then add a card
             if action == 'h':
                 player_hand.append(deal_card(deck))
@@ -237,7 +236,7 @@ if __name__ == '__main__':
     print(f'\033[96mWelcome {name} to the game. Good luck!\033[0m')
     # Options
     while True:
-        print("\033[34m1) Play Game")
+        print("\033[32m1) Play Game")
         print("2) Read The Rules")
         print("3) Exit Game\033[0m")
 

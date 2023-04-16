@@ -64,7 +64,7 @@ def print_card(card):
 def print_hand_in_row(hand):
     hand_cards = [[] for _ in range(7)]
     for card in hand:
-        if len(card) == 7:  # This condition checks if it is a hidden_card_cards
+        if len(card) == 7:
             card_cards = card
         else:
             card_cards = print_card(card)
@@ -104,7 +104,7 @@ def deal_card(deck):
 # Print the dealer card with 1 card hidden using ASSCI art
 def print_dealer_hand(hand, hide_first_card):
     if hide_first_card:
-        print("Dealer's hand:")
+        print("\033[34m\nDealer's hand:\033[0m")
         hidden_card_cards = [
             "┌───────┐",
             "│XXXXXXX│",
@@ -116,7 +116,7 @@ def print_dealer_hand(hand, hide_first_card):
         ]
         print_hand_in_row([hidden_card_cards] + hand[1:])
     else:
-        print("\nDealer's hand:")
+        print("\033[34m\nDealer's hand:\033[0m")
         print_hand_in_row(hand)
 
 # Function to check the player hand for a blackjack
@@ -134,7 +134,7 @@ def play_game():
         # Tell the player their chip count
         print(f"Chips: {chips}")
         # Player has to enter their bet
-        bet_input = input("Enter bet amount: ") 
+        bet_input = input("\033[32mEnter bet amount:\033[0m")
         # Error handling: Check if user input is a valid integer
         try:
             # Attempt to convert bet_input to an integer
@@ -145,10 +145,8 @@ def play_game():
             continue
         # If the player does not have enough chips
         if bet > chips:
-            print("You don't have enough chips.")
+            print("\033[31mYou don't have enough chips.\033[0m")
             continue
-        if chips == 0:
-            print("You have no chips left. Game over.")
 
         # Create a deck, dealer and player
         deck = create_deck()
@@ -159,34 +157,36 @@ def play_game():
 
         # Tell the player their hand total
         while True:
-            print(f'{name} hand is:')
+            print(f'\033[94m{name} hand is:\033[0m')
             # Print the player hand in a row
             print_hand_in_row(player_hand)
             # Print the hands value
-            print("Card value total:", value(player_hand))
+            print("\033[31mCard value total:\033[0m", value(player_hand))
+
+            # Check for blackjack for player and dealer
+            if check_blackjack(player_hand):
+                print("You have blackjack!")
+                print_dealer_hand(dealer_hand, hide_first_card=False)
+                print("You Win!")
+                chips += bet
+                continue
+
             # Ask the player if they want to hit or stand
-            action = input("Enter 'h' to hit or 's' to stand: ").lower()
+            action = input("\033[94mEnter 'h' to hit or 's' to stand:\033[0m ").lower()
+            # If h is selected then add a card
             if action == 'h':
-                # If h is selected then add a card
                 player_hand.append(deal_card(deck))
                 # If player goes over 21 then they are busted
                 if value(player_hand) > 21:
-                    print("Busted!")
-                    for card in player_hand:
-                        print_card(card)
-                    print("Card value total:", value(player_hand))
+                    print("\033[31mBusted!")
+                    print("You lose!\033[0m")
+                    print_hand_in_row(player_hand)
+                    print("\033[31mCard value total:\033[0m", value(player_hand))
                     # Show the dealer cards if the player goes bust
                     print_dealer_hand(dealer_hand, hide_first_card=False)
                     # Chip total will change if player busts
                     chips -= bet
-                    break
-                # Check for blackjack for player and dealer
-                if check_blackjack(player_hand):
-                    print("Player has blackjack!")
-                    print_dealer_hand(dealer_hand, hide_first_card=False)
-                    print("Player wins!")
-                    chips += bet
-                    continue
+                    break       
             # If player decides to stand
             elif action == 's':
                 # When the dealer card is less than the player they get more cards
@@ -195,21 +195,21 @@ def play_game():
                 print_dealer_hand(dealer_hand, hide_first_card=False)
                 print("Card value total", value(dealer_hand))
 
-                # Check if the player or the dealer has blackjack
-                if check_blackjack(player_hand) and check_blackjack(dealer_hand):
+                # Check if the dealer has blackjack
+                if check_blackjack(dealer_hand):
                     # If the dealer has blackjack
-                    if check_blackjack(dealer_hand):
-                        print("Dealer has blackjack!")
-                        print_dealer_hand(dealer_hand, hide_first_card=False)
-                        print("Dealer wins!")
-                        chips -= bet
-                        continue
-                    # If the player has blackjack and the dealer have blackjack
-                    if check_blackjack(player_hand):
-                        print("Player and dealer both have blackjack!")
-                        print_dealer_hand(dealer_hand, hide_first_card=False)
-                        print("It's a draw!")
-                        continue
+                    print("Dealer has blackjack!")
+                    print_dealer_hand(dealer_hand, hide_first_card=False)
+                    print("Dealer wins!")
+                    chips -= bet
+                    break
+
+                # Check if the player has blackjack and the dealer have blackjack
+                if check_blackjack(player_hand):
+                    print("Player and dealer both have blackjack!")
+                    print_dealer_hand(dealer_hand, hide_first_card=False)
+                    print("It's a draw!")
+                    continue
 
                 # If statement for if the dealer goes bust or who total is closer to 21 deciding the winner
                 if value(dealer_hand) > 21 or value(player_hand) > value(dealer_hand):
@@ -227,14 +227,14 @@ def play_game():
 if __name__ == '__main__':
     startpg()
     # Get the players name
-    name = input("What is your name?  ")
+    name = input("\033[96mWhat is your name?\033[0m")
     print("\u001b[1mWelcome to \u001b[30mBlack\u001b[31mJack!\u001b[0m")
-    print(f'Welcome {name} to the game. Good luck!')
+    print(f'\033[96mWelcome {name} to the game. Good luck!\033[0m')
     # Options
     while True:
-        print("1) Play Game")
+        print("\033[34m\033[1m1) Play Game")
         print("2) Read The Rules")
-        print("3) Exit Game")
+        print("3) Exit Game\033[0m\033[21m")
 
         # Ask the player to select on of the options
         option = input("Enter menu number please:")

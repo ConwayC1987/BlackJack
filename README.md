@@ -1,6 +1,8 @@
 ![Game on different devices](/images/amIresponive.png)
 
-Here is a live link to the game [Try it](https://blackjack-by-ciaran-c.herokuapp.com/)
+Here is a live link to the game [Try it](https://blackjack-by-ciaran-conway.herokuapp.com/)
+
+Here is a link to my repository [here](https://github.com/ConwayC1987/BlackJack)
 ***
 
 # BLACKJACK

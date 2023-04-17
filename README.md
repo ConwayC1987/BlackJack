@@ -10,7 +10,7 @@ This is terminal based game of the classic casino card game, Blackjack, using Py
 
 ## Pre-planning
 
-A workflow model was needed for the project and I decided to us Lucid chart to help plan the project out. The flow chart was made using https://www.lucidchart.com/pages/
+A workflow model was needed for the project and I decided to us Lucid chart to help plan the project out. The flow chart was made using https://www.lucidchart.com/pages/. I decided that I would use colour in the project and decided to use easy to see colours like green, red and some blue. I wanted to add colour to the cards suits also.
 
 ![Game flow chart](/images/flowchart.png)
 ***

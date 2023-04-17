@@ -99,13 +99,13 @@ def print_dealer_hand(hand, hide_first_card):
     if hide_first_card:
         print("\033[32m\nDealer's hand:\033[0m")
         hidden_card_cards = [
-            "┌───────┐",
-            "│XXXXXXX│",
-            "│XXXXXXX│",
-            "│XXXXXXX│",
-            "│XXXXXXX│",
-            "│XXXXXXX│",
-            "└───────┘",
+            "\033[31m┌───────┐\033[0m",
+            "\033[31m│XXXXXXX│\033[0m",
+            "\033[31m│XXXXXXX│\033[0m",
+            "\033[31m│XXXXXXX│\033[0m",
+            "\033[31m│XXXXXXX│\033[0m",
+            "\033[31m│XXXXXXX│\033[0m",
+            "\033[31m└───────┘\033[0m",
         ]
         print_hand_in_row([hidden_card_cards] + hand[1:])
     else:
@@ -146,9 +146,9 @@ def play_game():
     # If the player chips are all gone the game is over
     while chips > 0:
         # Tell the player their chip count
-        print(f"Chips: {chips}")
+        print(f"\033[31mStarting Chips: {chips}\033[0m")
         # Player has to enter their bet
-        bet_input = input("\033[32mEnter bet amount:\033[0m")
+        bet_input = input("\033[32mEnter bet amount: \033[0m")
         # Error handling: Check if user input is a valid integer
         try:
             # Attempt to convert bet_input to an integer
@@ -251,7 +251,7 @@ def play_game():
 if __name__ == '__main__':
     startpg()
     # Get the players name
-    name = input("\033[96mWhat is your name?\033[0m")
+    name = input("\033[96mWhat is your name? \033[0m")
     print("\u001b[1mWelcome to \u001b[30mBlack\u001b[31mJack!\u001b[0m")
     print(f'\033[96mWelcome {name} to the game. Good luck!\033[0m')
     # Options

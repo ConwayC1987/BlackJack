@@ -14,7 +14,8 @@ def clear_terminal():
         os.system('clear')
 
 
-# Game title made using https://patorjk.com/software/taag/#p=display&h=0&f=Big&t=BlackJack
+# Game title made using
+# https://patorjk.com/software/taag/#p=display&h=0&f=Big&t=BlackJack
 def startpg():
     """
     Title using ASCII art
@@ -32,8 +33,8 @@ def startpg():
     print(TITLE)
 
 
-# Ranks and suits for the cards in the deck
-RANKS = ('2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A')
+RANKS = ('2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K',
+         'A')
 SUITS = ('♠', '♣', '♦', '♥')
 CARD_ASCII = {
     '♠': '♠',
@@ -43,7 +44,8 @@ CARD_ASCII = {
 }
 
 
-# Function to make the card using ASSCI art idea from https://github.com/zsonnen/blackjack/blob/master/visuals.py
+# Function to make the card using ASSCI art idea from
+# https://github.com/zsonnen/blackjack/blob/master/visuals.py
 def print_card(card):
     rank, suit = card
     # Hearts and Diamonds are red
@@ -111,7 +113,8 @@ def print_dealer_hand(hand, hide_first_card):
         print_hand_in_row(hand)
 
 
-# Calculate the value of a hand and have 2 different values for aces, J,Q,K value is 10
+# Calculate the value of a hand and have 2 different values
+# for aces, J,Q,K value is 10
 def value(hand):
     total = 0
     aces = 0
@@ -186,8 +189,9 @@ def play_game():
                 chips += bet
                 continue
 
-            # Ask the player if they want to hit or stand
-            action = input("\033[32mEnter 'h' to hit or 's' to stand:\033[0m ").lower()
+            action = input(
+                "\033[32mEnter 'h' to hit or 's' to stand:\033[0m "
+            ).lower()
             # If h is selected then add a card
             if action == 'h':
                 player_hand.append(deal_card(deck))
@@ -196,7 +200,8 @@ def play_game():
                     print("\033[31mBusted!")
                     print("You lose!\033[0m")
                     print_hand_in_row(player_hand)
-                    print("\033[31mCard value total:\033[0m", value(player_hand))
+                    print("\033[31mCard value total:\033[0m", end=' ')
+                    print(value(player_hand))
                     # Show the dealer cards if the player goes bust
                     print_dealer_hand(dealer_hand, hide_first_card=False)
                     # Chip total will change if player busts
@@ -204,7 +209,7 @@ def play_game():
                     break
             # If player decides to stand
             elif action == 's':
-                # When the dealer card is less than the player they get more cards
+                # When dealers card is less than the player they get more cards
                 while value(dealer_hand) < value(player_hand):
                     dealer_hand.append(deal_card(deck))
                 print_dealer_hand(dealer_hand, hide_first_card=False)
@@ -219,15 +224,18 @@ def play_game():
                     chips -= bet
                     break
 
-                # Check if the player has blackjack and the dealer have blackjack
+                # Check if the player has blackjack and the dealer have
+                # blackjack
                 if check_blackjack(player_hand):
                     print("Player and dealer both have blackjack!")
                     print_dealer_hand(dealer_hand, hide_first_card=False)
                     print("It's a draw!")
                     continue
 
-                # If statement for if the dealer goes bust or who total is closer to 21 deciding the winner
-                if value(dealer_hand) > 21 or value(player_hand) > value(dealer_hand):
+                # If statement for if the dealer goes bust or who's total is
+                # closer to 21 deciding the winner
+                if value(dealer_hand) > 21 or \
+                   value(player_hand) > value(dealer_hand):
                     print("You win!")
                     chips += bet
                 elif value(player_hand) == value(dealer_hand):
@@ -238,7 +246,8 @@ def play_game():
                 break
 
 
-# Print the title welcome the player give them an option list of play game, rules or exist the game
+# Print the title welcome the player give them an option list of play game,
+# rules or exist the game
 if __name__ == '__main__':
     startpg()
     # Get the players name
@@ -269,8 +278,10 @@ if __name__ == '__main__':
                 1.Aim of JackJack is to get 21 or as close to as possible.\n
                 2.Jacks, kings and queens are worth 10. \n
                 3.Ace can be either 1 or 11.\n
-                4.You get 2 cards showing dealer will recieve 1 card face down.\n
-                5.Choice is to hit or stand until you or the dealer goes bust.\n
+                4.You get 2 cards showing dealer will recieve 1 card face
+                down and 1 card face up.\n
+                5.Choice is to hit or stand until you or the dealer goes
+                bust.\n
                 6.You will start with 100 chips and can bet each hand.\n
                 7.You will be playing against the computer.""")
         # Option to quit the game

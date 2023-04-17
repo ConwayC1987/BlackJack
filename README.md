@@ -125,7 +125,7 @@ There is a bug in the code that for some reason 10 are being displayed on the te
 
 - Another bug was when the dealer got blackjack it wasn't showing any of the players cards. This was also fixed.
 
-- A bug that could break the code was I wasn't checking if the user was using a positive number, this was also fixed.
+- A bug that could break the code was I wasn't checking if the user was using a positive number when betting, this was also fixed.
 
 - A lot of small and big bugs were found and all fixed to the best of my knowledge with the project.
 ***
@@ -143,43 +143,43 @@ The code was ran through the https://pep8ci.herokuapp.com/ to test for errors bu
 ***
 
 ## Deployment
-Navigate to heroku.com & log in.
+1. Navigate to heroku.com & log in.
 
-Click "new" and create a new App.
+2. Click "new" and create a new App.
 
-Give the application a name and then choose your region and Click "Create app".
+3. Give the application a name and then choose your region and Click "Create app".
 
-On the next page click on the Settings tab to adjust the settings.
+4. On the next page click on the Settings tab to adjust the settings.
 
-Click on the 'config vars' button.
+5. Click on the 'config vars' button.
 
-Supply a KEY of PORT and it's value of 8000. Then click on the "add" button.
+6. Supply a KEY of PORT and it's value of 8000. Then click on the "add" button.
 
-Buildpacks now need to be added.
+7. Buildpacks now need to be added.
 
-These install future dependancies that we need outside of the requirements file.
+8. These install future dependancies that we need outside of the requirements file.
 
-Select Python first and then node.js and click save.
+9. Select Python first and then node.js and click save.
 
-Make sure they are in this order.
+10. Make sure they are in this order.
 
-Then go to the deploy section and choose your deployment method.
+11. Then go to the deploy section and choose your deployment method.
 
-To connect with github select github and confirm.
+12. To connect with github select github and confirm.
 
-Search for your repository select it and click connect.
+13. Search for your repository select it and click connect.
 
-You can choose to either deploy using automatic deploys which means heroku will rebuild the app everytime you push your changes.
+14. You can choose to either deploy using automatic deploys which means heroku will rebuild the app everytime you push your changes.
 
-For this option choose the branch to deploy and click enable automatic deploys.
+15. For this option choose the branch to deploy and click enable automatic deploys.
 
-This can be changed at a later date to manual.
+16. This can be changed at a later date to manual.
 
-Manual deployment deploys the current state of a branch.
+17. Manual deployment deploys the current state of a branch.
 
-Click deploy branch.
+18. Click deploy branch.
 
-We can now click on the open App button above to view our application.
+19. We can now click on the open App button above to view our application.
 ***
 
 ## Credits 
